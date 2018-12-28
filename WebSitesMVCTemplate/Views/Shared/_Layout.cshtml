@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/mdb.min.css" />
+    <link rel="stylesheet" href="~/css/toastr/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top primary-color">
+        <a class="navbar-brand text-uppercase font-weight-bold white-text" href="#">Navbar</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="/Home" class="nav-link font-weight-bold white-text">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link font-weight-bold white-text">Sobre nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link font-weight-bold white-text">Contacto</a>
+                </li>
+            </ul>
+            <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item nav-logout">
+                        <span id="loggedUser" class="navbar-text white-text mr-3"></span>
+                    </li>
+                    <li class="nav-item nav-logout" style="display:none;">
+                        <a href="#" id="#logoutSubmit" class="nav-link text-uppercase font-weight-bold white-text">Cerrar sesión</a>
+                    </li>
+                    <li class="nav-item nav-login">
+                        <a href="#" class="nav-link text-uppercase font-weight-bold white-text" data-toggle="modal" data-target="#loginModal">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-uppercase font-weight-bold white-text" data-toggle="modal" data-target="#registerModal">Registrarse</a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </nav>
+
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    @{ await Html.RenderPartialAsync("_Footer"); }
+    @{ await Html.RenderPartialAsync("~/Views/Account/_Login.cshtml"); }
+    @{ await Html.RenderPartialAsync("~/Views/Account/_Register.cshtml"); }
+    @{ await Html.RenderPartialAsync("~/Views/Account/_ForgotPassword.cshtml"); }
+
+    <script type="text/javascript" src="~/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/js/mdb.min.js"></script>
+    <script type="text/javascript" src="~/js/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="~/js/app/helpers/ComponentsHelper.js"></script>
+    <script type="text/javascript" src="~/js/app/Account.js"></script>
+    @*<script type="text/javascript" src="~/js/app/Localization.en.js"></script>
+    <script type="text/javascript" src="~/js/app/Localization.es.js"></script>
+    <script type="text/javascript" src="~/js/app/Localizer.js"></script>*@
+    <script type="text/javascript" src="~/js/site.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

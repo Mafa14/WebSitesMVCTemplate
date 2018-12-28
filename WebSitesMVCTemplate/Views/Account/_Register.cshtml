@@ -1,0 +1,63 @@
+﻿<div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">
+                    Registrarse
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm" method="post" action="" novalidate="novalidate">
+                    <div class="mb-5">
+                        <label for="registerUserName">Nombre completo</label>
+                        <input id="registerUserName" name="registerUserName" type="text" class="form-control" />
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="registerDocumentId">Documento de identidad</label>
+                        <input id="registerDocumentId" name="registerDocumentId" type="text" class="form-control" />
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="registerEmail">Email</label>
+                        <input id="registerEmail" name="registerEmail" type="email" class="form-control" />
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="registerPassword">Contraseña</label>
+                        <input id="registerPassword" name="registerPassword" type="password" class="form-control" />
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="registerConfirmPassword">Confirmar contraseña</label>
+                        <input id="registerConfirmPassword" name="registerConfirmPassword" type="password" class="form-control" />
+                    </div>
+
+                    <div class="text-center form-sm mt-2">
+                        <button type="submit" id="registerSubmit" class="btn btn-info">Registrarse<i class="fa fa-sign-in ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="options text-right">
+                    <p class="pt-1">
+                        Ya tienes una cuenta?
+                        <a href="#" class="blue-text" data-toggle="modal" data-target="#loginModal" data-dismiss="modal">
+                            Iniciar sesión
+                        </a>
+                    </p>
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

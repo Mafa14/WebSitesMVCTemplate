@@ -1,0 +1,53 @@
+﻿<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">
+                    Iniciar sesión
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm" method="post" action="" novalidate="novalidate">
+                    <div class="mb-5">
+                        <label for="loginEmail">Email</label>
+                        <input id="loginEmail" name="loginEmail" type="email" class="form-control" />
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="loginPassword">Contraseña</label>
+                        <input id="loginPassword" name="loginPassword" type="password" class="form-control" />
+                    </div>
+
+                    <div class="text-center form-sm mt-2">
+                        <button id="loginSubmit" class="btn btn-info">Iniciar sesión<i class="fa fa-sign-in ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="options text-center text-md-right mt-1">
+                    <p>
+                        No eres miembro?
+                        <a href="#" class="blue-text" data-toggle="modal" data-target="#registerModal" data-dismiss="modal">
+                            Registrate
+                        </a>
+                    </p>
+                    <p>
+                        <a href="#" class="blue-text" data-toggle="modal" data-target="#forgotPasswordModal" data-dismiss="modal">
+                            Has olvidado tu contraseña?
+                        </a>
+                    </p>
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
