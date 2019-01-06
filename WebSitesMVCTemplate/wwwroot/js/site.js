@@ -18,7 +18,9 @@ function ModalsInitialization() {
 function InitializeForms() {
     var loginForm = $('#loginForm'),
         registerForm = $('#registerForm'),
-        logoutSubmit = $('#logoutSubmit');
+        logoutSubmit = $('#logoutSubmit'),
+        forgotPasswordForm = $('#forgotPasswordForm'),
+        resetForm = $('#resetForm');
 
     loginForm.validate({
         rules: {
@@ -98,7 +100,49 @@ function InitializeForms() {
         }
     });
 
+    forgotPasswordForm.validate({
+        rules: {
+            forgotPasswordEmail: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            forgotPasswordEmail: {
+                required: "El Email es requerido",
+                email: "El formato del Email es incorrecto"
+            }
+        }
+    });
+
+    resetForm.validate({
+        rules: {
+            resetPassword: {
+                required: true,
+                minlength: 6,
+                maxlength: 100
+            },
+            resetConfirmPassword: {
+                required: true,
+                equalTo: "#resetPassword"
+            }
+        },
+        messages: {
+            resetPassword: {
+                required: "La contraseña es requerida",
+                minlength: "La contraseña debe tener mas de 6 caracteres",
+                maxlength: "La contraseña debe tener menos de 100 caracteres"
+            },
+            resetConfirmPassword: {
+                required: "Repetir contraseña es requerida",
+                equalTo: "Contraseña y repetir contraseña no coinciden, verificar que sean iguales"
+            }
+        }
+    });
+
     loginForm.submit(Account.Login);
     registerForm.submit(Account.Register);
     logoutSubmit.click(Account.Logout);
+    forgotPasswordForm.click(Account.ForgotPassword);
+    resetForm.click(Account.ResetPassword);
 }
