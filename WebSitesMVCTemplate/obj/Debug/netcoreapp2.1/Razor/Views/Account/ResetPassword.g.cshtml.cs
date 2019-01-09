@@ -64,7 +64,7 @@ using WebSitesMVCTemplate.Models;
             WriteLiteral("\r\n<h2>Reiniciar contraseña</h2>\r\n\r\n");
             EndContext();
             BeginContext(149, 825, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4a36524ce69841f0a36cc5872588e64e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bdf92497444f41ff90726f79a2362f51", async() => {
                 BeginContext(218, 26, true);
                 WriteLiteral("\r\n    <input type=\"hidden\"");
                 EndContext();

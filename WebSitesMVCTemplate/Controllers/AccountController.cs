@@ -12,7 +12,7 @@ namespace WebSitesMVCTemplate.Controllers
     {
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ConfirmEmail(string id, string token)
+        public IActionResult ConfirmEmail(string id, string token = null)
         {
             if (id == null || token == null)
             {
@@ -21,7 +21,7 @@ namespace WebSitesMVCTemplate.Controllers
 
             if (WebAPICaller.ConfirmEmailCall(id, token))
             {
-                return RedirectToAction(nameof(HomeController.Index));
+                return RedirectToAction("Index", "Home");
             }
 
             throw new ApplicationException("El usuario y/o token son incorrectos.");

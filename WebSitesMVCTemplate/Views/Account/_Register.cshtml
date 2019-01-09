@@ -11,6 +11,10 @@
             </div>
             <div class="modal-body">
                 <form id="registerForm" method="post" action="" novalidate="novalidate">
+                    <input type="hidden"
+                           value="@Url.Action("ConfirmEmail", "Account", new { id = "#Id", token = "#Token" }, Context.Request.Scheme)"
+                           id="registerConfirmationUrl" name="registerConfirmationUrl" />
+
                     <div class="mb-5">
                         <label for="registerUserName">Nombre completo</label>
                         <input id="registerUserName" name="registerUserName" type="text" class="form-control" />

@@ -46,7 +46,8 @@ var Account = {
                 UserName: $("#registerUserName").val(),
                 Email: $("#registerEmail").val(),
                 Password: $("#registerPassword").val(),
-                ConfirmPassword: $("#registerConfirmPassword").val()
+                ConfirmPassword: $("#registerConfirmPassword").val(),
+                ConfirmationUrl: $("#registerConfirmationUrl").val()
             };
             $.ajax({
                 url: "https://localhost:44397/api/accounts/register",
@@ -132,7 +133,8 @@ var Account = {
 
         if ($("#forgotPasswordForm").valid()) {
             var jsonObject = {
-                Email: $("#forgotPasswordEmail").val()
+                Email: $("#forgotPasswordEmail").val(),
+                ConfirmationUrl: $("#forgotPasswordConfirmationUrl").val()
             };
             $.ajax({
                 url: "https://localhost:44397/api/accounts/forgot",

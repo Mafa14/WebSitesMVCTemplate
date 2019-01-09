@@ -16,11 +16,10 @@ namespace WebSitesMVCTemplate.Helpers
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = client.GetAsync(string.Format("/api/accounts/confirm/email")).Result;
+            var response = client.PostAsync(string.Format("/api/accounts/confirm/email?id={0}&token={1}", id, token), null).Result;
             if (response.IsSuccessStatusCode)
             {
-                string responseString = response.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<bool>(responseString);
+                return true;
             }
 
             return false;
