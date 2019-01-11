@@ -4,13 +4,15 @@ var LoggedUserDataCookieName = 'Luser';
 var Account = {
     UserAccountOperations: function () {
         if (Cookies.get(TokenCookieName) !== undefined && Cookies.get(LoggedUserDataCookieName) !== undefined) {
-            var userData = Cookies.get(LoggedUserDataCookieName);
+            var userData = JSON.parse(Cookies.get(LoggedUserDataCookieName));
             $("#loggedUser").text(userData.UserName + ' - ' + userData.DocumentId);
             $(".nav-logout").show();
             $(".nav-login").hide();
+            $(".nav-register").hide();
         } else {
             $(".nav-logout").hide();
             $(".nav-login").show();
+            $(".nav-register").show();
         }
     },
     Token: function (email, password) {
@@ -31,6 +33,8 @@ var Account = {
             }
 
             Cookies.set(TokenCookieName, data, { expires: 7 });
+
+            Account.UserAccountOperations();
         }).fail(function (jqXHR) {
             toastr["error"](jqXHR.responseText);
         });
@@ -79,18 +83,18 @@ var Account = {
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
             }).done(function (data) {
-                toastr["success"](data.Message);
+                toastr["success"](data.message);
 
-                this.Token(data.UserId, data.Password);
+                Account.Token(data.email, data.password);
 
                 if (Cookies.get(LoggedUserDataCookieName) !== undefined) {
                     Cookies.remove(LoggedUserDataCookieName);
                 }
 
                 Cookies.set(LoggedUserDataCookieName, {
-                    Email: data.Email,
-                    UserName: data.UserName,
-                    DocumentId: data.DocumentId
+                    Email: data.email,
+                    UserName: data.userName,
+                    DocumentId: data.documentId
                 }, { expires: 7 });
             }).fail(function (jqXHR) {
                 toastr["error"](jqXHR.responseText);
@@ -119,11 +123,9 @@ var Account = {
                 Cookies.remove(LoggedUserDataCookieName);
             }
 
-            UserAccountOperations();
+            Account.UserAccountOperations();
         }).fail(function (jqXHR) {
             toastr["error"](jqXHR.responseText);
-        }).always(function () {
-            $('#loginModal').modal('toggle');
         });
     },
     ForgotPassword: function (event) {
@@ -169,7 +171,10 @@ var Account = {
                 contentType: "application/json"
             }).done(function (data) {
                 toastr["success"](data);
-                $("#resetHomeLink").show();
+                $("#resetConfirmation").show();
+                $("#resetPassword").prop("readonly", true);
+                $("#resetConfirmPassword").prop("readonly", true);
+                $("#resetSubmit").prop("disabled", true);
             }).fail(function (jqXHR) {
                 toastr["error"](jqXHR.responseText);
             });

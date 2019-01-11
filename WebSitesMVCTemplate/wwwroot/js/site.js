@@ -143,6 +143,8 @@ function InitializeForms() {
     loginForm.submit(Account.Login);
     registerForm.submit(Account.Register);
     logoutSubmit.click(Account.Logout);
-    forgotPasswordForm.click(Account.ForgotPassword);
-    resetForm.click(Account.ResetPassword);
+    forgotPasswordForm.submit(Account.ForgotPassword);
+    resetForm.submit(Account.ResetPassword);
+
+    Account.UserAccountOperations();
 }
