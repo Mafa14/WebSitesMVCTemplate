@@ -25,3 +25,7 @@ label.error {
     font-size: 80%;
     color: #dc3545;
 }
+
+.modal {
+    overflow: auto !important;
+}

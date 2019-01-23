@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Perfil de usuario";
+}
+
+<div class="row justify-content-around p-5">
+    <form id="profileForm" method="post" action="" novalidate="novalidate">
+        <input type="hidden" id="profileId" name="profileId" />
+        <input type="hidden"
+               value="@Url.Action("ConfirmEmail", "Account", new { id = "#Id", token = "#Token" }, Context.Request.Scheme)"
+               id="profileConfirmationUrl" name="profileConfirmationUrl" />
+
+        <div class="mb-5">
+            <label for="profileEmail">Email</label>
+            <input id="profileEmail" name="profileEmail" type="email" class="form-control" readonly />
+        </div>
+
+        <div class="mb-5">
+            <label for="profileUserName">Nombre completo</label>
+            <input id="profileUserName" name="profileUserName" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-5">
+            <label for="profileDocumentId">Documento de identidad</label>
+            <input id="profileDocumentId" name="profileDocumentId" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-5">
+            <label for="profilePhone">Telefono/Celular</label>
+            <input id="profilePhone" name="profilePhone" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-5">
+            <label for="profileAddress">Dirección</label>
+            <input id="profileAddress" name="profileAddress" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-5">
+            <label for="profileBirthDate">Fecha de nacimiento</label>
+            <input id="profileBirthDate" name="profileBirthDate" type="datetime" class="form-control" />
+        </div>
+
+        <div class="text-center form-sm mt-2">
+            <button type="submit" id="profileSubmit" class="btn btn-info">Guardar<i class="fa fa-save-in ml-1"></i></button>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript" src="@Url.Content("~/js/app/User.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/app/pages/User.Index.js")"></script>
+}

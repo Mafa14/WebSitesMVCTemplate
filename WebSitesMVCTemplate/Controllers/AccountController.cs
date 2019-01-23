@@ -16,7 +16,7 @@ namespace WebSitesMVCTemplate.Controllers
         {
             if (id == null || token == null)
             {
-                throw new ApplicationException("El usuario y token son requeridos reiniciar la contraseña.");
+                throw new ApplicationException("El usuario y token son requeridos para reiniciar la contraseña.");
             }
 
             if (WebAPICaller.ConfirmEmailCall(id, token))
@@ -33,10 +33,17 @@ namespace WebSitesMVCTemplate.Controllers
         {
             if (id == null || token == null)
             {
-                throw new ApplicationException("El usuario y token son requeridos reiniciar la contraseña.");
+                throw new ApplicationException("El usuario y token son requeridos para reiniciar la contraseña.");
             }
 
             return View(new ResetPasswordViewModel { Id = id, Token = token });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ChangePassword()
+        {
+            return View();
         }
     }
 }

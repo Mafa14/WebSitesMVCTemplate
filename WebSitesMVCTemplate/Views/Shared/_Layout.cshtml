@@ -26,9 +26,6 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link font-weight-bold white-text">Sobre nosotros</a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link font-weight-bold white-text">Contacto</a>
-                </li>
             </ul>
             <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post">
                 <ul class="navbar-nav ml-auto">
@@ -36,12 +33,18 @@
                         <span id="loggedUser" class="navbar-text white-text mr-3"></span>
                     </li>
                     <li class="nav-item nav-logout" style="display:none;">
+                        <a href="@Url.Action("Index", "User")" id="myProfile" class="nav-link text-uppercase font-weight-bold white-text">Perfil</a>
+                    </li>
+                    <li class="nav-item nav-logout" style="display:none;">
+                        <a href="@Url.Action("ChangePassword", "Account")" id="changePassword" class="nav-link text-uppercase font-weight-bold white-text">Cambiar contraseña</a>
+                    </li>
+                    <li class="nav-item nav-logout" style="display:none;">
                         <a href="#" id="logoutSubmit" class="nav-link text-uppercase font-weight-bold white-text">Cerrar sesión</a>
                     </li>
                     <li class="nav-item nav-login">
                         <a href="#" class="nav-link text-uppercase font-weight-bold white-text" data-toggle="modal" data-target="#loginModal">Iniciar sesión</a>
                     </li>
-                    <li class="nav-item nav-register">
+                    <li class="nav-item nav-login">
                         <a href="#" class="nav-link text-uppercase font-weight-bold white-text" data-toggle="modal" data-target="#registerModal">Registrarse</a>
                     </li>
                 </ul>
@@ -50,7 +53,7 @@
     </nav>
 
     <partial name="_CookieConsentPartial" />
-
+    
     <div class="container body-content">
         @RenderBody()
         <hr />

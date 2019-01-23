@@ -8,7 +8,7 @@ namespace WebSitesMVCTemplate.Controllers
     {
         public IActionResult Index()
         {
-            ViewData["Title"] = "TituloPorDefecto";
+            ViewData["Title"] = "Inicio";
             return View();
         }
 
