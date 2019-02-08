@@ -26,6 +26,8 @@ var Account = {
             data: JSON.stringify(jsonObject),
             contentType: "application/json"
         }).done(function (data) {
+            Common.HideLoadingIndicator();
+
             if (Cookies.get(TokenCookieName) !== undefined) {
                 Cookies.remove(TokenCookieName);
             }
@@ -34,6 +36,7 @@ var Account = {
 
             Account.UserAccountOperations();
         }).fail(function (jqXHR) {
+            Common.HideLoadingIndicator();
             toastr["error"](jqXHR.responseText);
         });
     },
@@ -43,6 +46,9 @@ var Account = {
         Component.InitToastr();
 
         if ($("#registerForm").valid()) {
+
+            Common.ShowLoadingIndicator();
+
             var jsonObject = {
                 DocumentId: $("#registerDocumentId").val(),
                 UserName: $("#registerUserName").val(),
@@ -57,8 +63,10 @@ var Account = {
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
             }).done(function (data) {
+                Common.HideLoadingIndicator();
                 toastr["success"](data);
             }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
             }).always(function () {
                 $('#registerModal').modal('toggle');
@@ -71,6 +79,9 @@ var Account = {
         Component.InitToastr();
 
         if ($("#loginForm").valid()) {
+
+            Common.ShowLoadingIndicator();
+
             var jsonObject = {
                 Email: $("#loginEmail").val(),
                 Password: $("#loginPassword").val()
@@ -99,6 +110,7 @@ var Account = {
                     Address: data.address
                 }, { expires: 7 });
             }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
             }).always(function () {
                 $('#loginModal').modal('toggle');
@@ -109,12 +121,14 @@ var Account = {
         event.preventDefault();
 
         Component.InitToastr();
+        Common.ShowLoadingIndicator();
 
         $.ajax({
             url: "https://localhost:44397/api/accounts/logout",
             type: "POST",
             contentType: "application/json"
         }).done(function (data) {
+            Common.HideLoadingIndicator();
             toastr["success"](data);
 
             if (Cookies.get(TokenCookieName) !== undefined) {
@@ -126,7 +140,9 @@ var Account = {
             }
 
             Account.UserAccountOperations();
+            window.location.href = $('#defaultRedirectionUrl').val();
         }).fail(function (jqXHR) {
+            Common.HideLoadingIndicator();
             toastr["error"](jqXHR.responseText);
         });
     },
@@ -136,6 +152,9 @@ var Account = {
         Component.InitToastr();
 
         if ($("#forgotPasswordForm").valid()) {
+
+            Common.ShowLoadingIndicator();
+
             var jsonObject = {
                 Email: $("#forgotPasswordEmail").val(),
                 ConfirmationUrl: $("#forgotPasswordConfirmationUrl").val()
@@ -146,8 +165,10 @@ var Account = {
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
             }).done(function (data) {
-                toastr["success"](data.Message);
+                Common.HideLoadingIndicator();
+                toastr["success"](data);
             }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
             }).always(function () {
                 $('#forgotPasswordModal').modal('toggle');
@@ -160,6 +181,9 @@ var Account = {
         Component.InitToastr();
 
         if ($("#resetForm").valid()) {
+
+            Common.ShowLoadingIndicator();
+
             var jsonObject = {
                 Id: $("#resetId").val(),
                 Token: $("#resetToken").val(),
@@ -171,12 +195,14 @@ var Account = {
                 type: "POST",
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
-            }).done(function (data) {
-                toastr["success"](data);
+            }).done(function () {
+                Common.HideLoadingIndicator();
                 $("#resetPassword").prop("readonly", true);
                 $("#resetConfirmPassword").prop("readonly", true);
                 $("#resetSubmit").prop("disabled", true);
+                window.location.href = $('#defaultRedirectionUrl').val();
             }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
             });
         }
@@ -199,14 +225,14 @@ var Account = {
                         minlength: 6,
                         maxlength: 100
                     },
-                    changePassword: {
+                    changeNewPassword: {
                         required: true,
                         minlength: 6,
                         maxlength: 100
                     },
-                    changeConfirmPassword: {
+                    changeConfirmNewPassword: {
                         required: true,
-                        equalTo: "#changePassword"
+                        equalTo: "#changeNewPassword"
                     }
                 },
                 messages: {
@@ -215,14 +241,14 @@ var Account = {
                         minlength: "La contraseña actual debe tener mas de 6 caracteres",
                         maxlength: "La contraseña actual debe tener menos de 100 caracteres"
                     },
-                    changePassword: {
+                    changeNewPassword: {
                         required: "La nueva contraseña es requerida",
                         minlength: "La nueva contraseña debe tener mas de 6 caracteres",
                         maxlength: "La nueva contraseña debe tener menos de 100 caracteres"
                     },
-                    changeConfirmPassword: {
-                        required: "Confirmar contraseña es requerida",
-                        equalTo: "Nueva contraseña y confirmar contraseña no coinciden, verificar que sean iguales"
+                    changeConfirmNewPassword: {
+                        required: "Confirmar nueva contraseña es requerida",
+                        equalTo: "Nueva contraseña y confirmar nueva contraseña no coinciden, verificar que sean iguales"
                     }
                 }
             });
@@ -242,20 +268,29 @@ var Account = {
         Component.InitToastr();
 
         if ($("#changeForm").valid()) {
+
+            Common.ShowLoadingIndicator();
+
             var jsonObject = {
                 Id: $("#changeId").val(),
                 OldPassword: $("#changeOldPassword").val(),
-                NewPassword: $("#changePassword").val(),
-                NewConfirmPassword: $("#changeConfirmPassword").val()
+                NewPassword: $("#changeNewPassword").val(),
+                NewConfirmPassword: $("#changeConfirmNewPassword").val()
             };
             $.ajax({
                 url: "https://localhost:44397/api/accounts/change",
                 type: "POST",
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
-            }).done(function (data) {
-                // TODO: Go to Home/Index, send a callback that initialize a toastr with a message.
+            }).done(function () {
+                Common.HideLoadingIndicator();
+                $("#changeOldPassword").prop("readonly", true);
+                $("#changeNewPassword").prop("readonly", true);
+                $("#changeConfirmNewPassword").prop("readonly", true);
+                $("#changeSubmit").prop("disabled", true);
+                window.location.href = $('#defaultRedirectionUrl').val();
             }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
             });
         }

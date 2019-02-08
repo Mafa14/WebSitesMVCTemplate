@@ -7,7 +7,6 @@ using WebSitesMVCTemplate.Models;
 namespace WebSitesMVCTemplate.Controllers
 {
     [Route("[controller]/[action]")]
-    [Authorize]
     public class AccountController : Controller
     {
         [HttpGet]

@@ -3,7 +3,7 @@
 }
 
 <div class="row justify-content-around p-5">
-    <form id="profileForm" method="post" action="" novalidate="novalidate">
+    <form id="profileForm" method="post" action="" class="col-6" novalidate="novalidate">
         <input type="hidden" id="profileId" name="profileId" />
         <input type="hidden"
                value="@Url.Action("ConfirmEmail", "Account", new { id = "#Id", token = "#Token" }, Context.Request.Scheme)"
@@ -36,7 +36,7 @@
 
         <div class="mb-5">
             <label for="profileBirthDate">Fecha de nacimiento</label>
-            <input id="profileBirthDate" name="profileBirthDate" type="datetime" class="form-control" />
+            <input id="profileBirthDate" name="profileBirthDate" type="text" class="form-control" />
         </div>
 
         <div class="text-center form-sm mt-2">
@@ -45,8 +45,7 @@
     </form>
 </div>
 
-@section Scripts
-    {
+@section Scripts {
     <script type="text/javascript" src="@Url.Content("~/js/app/User.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/js/app/pages/User.Index.js")"></script>
 }

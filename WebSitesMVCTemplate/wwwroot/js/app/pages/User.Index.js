@@ -1,3 +1,4 @@
-﻿//$(document).ready(function () {
+﻿$(document).ready(function () {
+    Common.DocumentInitialization();
     User.InitializeProfileData();
-//});
+});

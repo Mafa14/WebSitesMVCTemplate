@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/mdb.min.css" />
     <link rel="stylesheet" href="~/css/toastr/toastr.min.css" />
+    <link rel="stylesheet" href="~/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="~/css/style.css" />
 </head>
 <body>
+    <input type="hidden" value="@Url.Action("Index", "Home")" id="defaultRedirectionUrl" name="defaultRedirectionUrl" />
+
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top primary-color">
         <a class="navbar-brand text-uppercase font-weight-bold white-text" href="#">Navbar</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -53,8 +56,12 @@
     </nav>
 
     <partial name="_CookieConsentPartial" />
-    
+
     <div class="container body-content">
+        <div id="loadingIndicator">
+            <img src="~/img/loader.gif" alt="Loading" /><br />
+            Cargando...
+        </div>
         @RenderBody()
         <hr />
     </div>
@@ -71,9 +78,10 @@
     <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/js/mdb.min.js"></script>
     <script type="text/javascript" src="~/js/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="~/js/app/helpers/ComponentsHelper.js"></script>
     <script type="text/javascript" src="~/js/app/Account.js"></script>
-    <script type="text/javascript" src="~/js/site.js"></script>
+    <script type="text/javascript" src="~/js/app/Common.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

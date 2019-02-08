@@ -7,6 +7,8 @@
 
         if (Cookies.get(TokenCookieName) !== undefined && Cookies.get(LoggedUserDataCookieName) !== undefined) {
             var userData = JSON.parse(Cookies.get(LoggedUserDataCookieName));
+            var birthDatePicker = $("#profileBirthDate");
+            birthDatePicker.datepicker({ dateFormat: 'dd/mm/yy' });
 
             $("#profileId").val(userData.Id);
             $("#profileEmail").val(userData.Email);
@@ -14,7 +16,10 @@
             $("#profileDocumentId").val(userData.DocumentId);
             $("#profilePhone").val(userData.PhoneNumber);
             $("#profileAddress").val(userData.Address);
-            $("#profileBirthDate").val(userData.BirthDate);
+
+            if (new Date(userData.BirthDate) > DATE_MIN_VALUE) {
+                birthDatePicker.datepicker("setDate", new Date(userData.BirthDate));
+            }
 
             profileForm.validate({
                 rules: {
@@ -84,6 +89,9 @@
         Component.InitToastr();
 
         if ($("#profileForm").valid()) {
+
+            Common.ShowLoadingIndicator();
+
             var jsonObject = {
                 Id: $("#profileId").val(),
                 UserName: $("#profileUserName").val(),
@@ -99,9 +107,11 @@
                 type: "PUT",
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
-            }).done(function (data) {
-                // TODO: Go to Home/Index, send a callback that initialize a toastr with a message.
+            }).done(function () {
+                Common.HideLoadingIndicator();
+                window.location.href = $('#defaultRedirectionUrl').val();
             }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
             });
         }
