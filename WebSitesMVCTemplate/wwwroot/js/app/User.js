@@ -2,24 +2,19 @@
     InitializeProfileData: function () {
 
         Component.InitToastr();
+        Common.ShowLoadingIndicator();
 
         var profileForm = $("#profileForm");
 
+        profileForm.submit(function (event) {
+            event.preventDefault();
+        });
+
         if (Cookies.get(TokenCookieName) !== undefined && Cookies.get(LoggedUserDataCookieName) !== undefined) {
-            var userData = JSON.parse(Cookies.get(LoggedUserDataCookieName));
-            var birthDatePicker = $("#profileBirthDate");
+            var userData = JSON.parse(Cookies.get(LoggedUserDataCookieName)),
+                birthDatePicker = $("#profileBirthDate");
+
             birthDatePicker.datepicker({ dateFormat: 'dd/mm/yy' });
-
-            $("#profileId").val(userData.Id);
-            $("#profileEmail").val(userData.Email);
-            $("#profileUserName").val(userData.UserName);
-            $("#profileDocumentId").val(userData.DocumentId);
-            $("#profilePhone").val(userData.PhoneNumber);
-            $("#profileAddress").val(userData.Address);
-
-            if (new Date(userData.BirthDate) > DATE_MIN_VALUE) {
-                birthDatePicker.datepicker("setDate", new Date(userData.BirthDate));
-            }
 
             profileForm.validate({
                 rules: {
@@ -74,13 +69,31 @@
                 }
             });
 
-            profileForm.submit(User.SaveProfile);
+            $.ajax({
+                url: "https://localhost:44397/api/users?id=" + userData.Id,
+                type: "GET",
+                contentType: "application/json"
+            }).done(function (data) {
+                Common.HideLoadingIndicator();
+
+                $("#profileId").val(data.id);
+                $("#profileEmail").val(data.email);
+                $("#profileUserName").val(data.userName);
+                $("#profileDocumentId").val(data.documentId);
+                $("#profilePhone").val(data.phoneNumber);
+                $("#profileAddress").val(data.address);
+
+                if (new Date(data.birthDate) > DATE_MIN_VALUE) {
+                    birthDatePicker.datepicker("setDate", new Date(data.birthDate));
+                }
+
+                profileForm.submit(User.SaveProfile);
+            }).fail(function (jqXHR) {
+                Common.HideLoadingIndicator();
+                toastr["error"](jqXHR.responseText);
+            });
         } else {
             toastr["error"]("Error, tienes que estar loggeado para poder acceder a esta pagina.");
-
-            profileForm.submit(function (event) {
-                event.preventDefault();
-            });
         }
     },
     SaveProfile: function (event) {

@@ -104,10 +104,7 @@ var Account = {
                     Id: data.id,
                     UserName: data.userName,
                     Email: data.email,
-                    PhoneNumber: data.phoneNumber,
-                    BirthDate: data.birthDate,
-                    DocumentId: data.documentId,
-                    Address: data.address
+                    DocumentId: data.documentId
                 }, { expires: 7 });
             }).fail(function (jqXHR) {
                 Common.HideLoadingIndicator();
