@@ -13,33 +13,6 @@ var Account = {
             $(".nav-login").show();
         }
     },
-    Token: function (email, password) {
-        Component.InitToastr();
-
-        var jsonObject = {
-            Email: email,
-            Password: password
-        };
-        $.ajax({
-            url: "https://localhost:44397/api/tokens",
-            type: "POST",
-            data: JSON.stringify(jsonObject),
-            contentType: "application/json"
-        }).done(function (data) {
-            Common.HideLoadingIndicator();
-
-            if (Cookies.get(TokenCookieName) !== undefined) {
-                Cookies.remove(TokenCookieName);
-            }
-
-            Cookies.set(TokenCookieName, data, { expires: 7 });
-
-            Account.UserAccountOperations();
-        }).fail(function (jqXHR) {
-            Common.HideLoadingIndicator();
-            toastr["error"](jqXHR.responseText);
-        });
-    },
     Register: function (event) {
         event.preventDefault();
 
@@ -92,9 +65,14 @@ var Account = {
                 data: JSON.stringify(jsonObject),
                 contentType: "application/json"
             }).done(function (data) {
+                Common.HideLoadingIndicator();
                 toastr["success"](data.message);
 
-                Account.Token(data.email, data.password);
+                if (Cookies.get(TokenCookieName) !== undefined) {
+                    Cookies.remove(TokenCookieName);
+                }
+
+                Cookies.set(TokenCookieName, data.token, { expires: 7 });
 
                 if (Cookies.get(LoggedUserDataCookieName) !== undefined) {
                     Cookies.remove(LoggedUserDataCookieName);
@@ -106,6 +84,8 @@ var Account = {
                     Email: data.email,
                     DocumentId: data.documentId
                 }, { expires: 7 });
+
+                Account.UserAccountOperations();
             }).fail(function (jqXHR) {
                 Common.HideLoadingIndicator();
                 toastr["error"](jqXHR.responseText);
@@ -123,7 +103,10 @@ var Account = {
         $.ajax({
             url: "https://localhost:44397/api/accounts/logout",
             type: "POST",
-            contentType: "application/json"
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get(TokenCookieName));
+            }
         }).done(function (data) {
             Common.HideLoadingIndicator();
             toastr["success"](data);
@@ -278,7 +261,10 @@ var Account = {
                 url: "https://localhost:44397/api/accounts/change",
                 type: "POST",
                 data: JSON.stringify(jsonObject),
-                contentType: "application/json"
+                contentType: "application/json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get(TokenCookieName));
+                }
             }).done(function () {
                 Common.HideLoadingIndicator();
                 $("#changeOldPassword").prop("readonly", true);

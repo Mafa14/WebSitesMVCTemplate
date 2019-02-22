@@ -72,7 +72,10 @@
             $.ajax({
                 url: "https://localhost:44397/api/users?id=" + userData.Id,
                 type: "GET",
-                contentType: "application/json"
+                contentType: "application/json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get(TokenCookieName));
+                }
             }).done(function (data) {
                 Common.HideLoadingIndicator();
 
@@ -119,7 +122,10 @@
                 url: "https://localhost:44397/api/users",
                 type: "PUT",
                 data: JSON.stringify(jsonObject),
-                contentType: "application/json"
+                contentType: "application/json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get(TokenCookieName));
+                }
             }).done(function () {
                 Common.HideLoadingIndicator();
                 window.location.href = $('#defaultRedirectionUrl').val();
