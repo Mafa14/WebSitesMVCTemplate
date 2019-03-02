@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Listado de usuarios";
+}
+
+<div class="row justify-content-around p-5">
+    <table id="usersTable" class="display">
+        <thead>
+            <tr>
+                <th>Nombre completo</th>
+                <th>Documento de identidad</th>
+                <th>Email</th>
+                <th>Telefono/Celular</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="@Url.Content("~/js/app/User.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/js/app/pages/User.List.js")"></script>
+}

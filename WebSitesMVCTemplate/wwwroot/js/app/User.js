@@ -134,5 +134,47 @@
                 toastr["error"](jqXHR.responseText);
             });
         }
+    },
+    InitializeUserList: function () {
+
+        Component.InitToastr();
+
+        var usersTable = $("#usersTable");
+
+        usersTable.DataTable({
+            'processing': true,
+            'serverSide': true,
+            'ordering': true,
+            'paging': true,
+            'searching': true,
+            'ajax': {
+                'url': 'https://localhost:44397/api/users/all',
+                'type': 'POST',
+                'contentType': 'application/json',
+                'beforeSend': function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get(TokenCookieName));
+                    Common.ShowLoadingIndicator();
+                },
+                'data': function (d) {
+                    return JSON.stringify(d);
+                },
+                'dataSrc': function (json) {
+                    Common.HideLoadingIndicator();
+
+                    if (json.error != '') {
+                        toastr["error"](json.error);
+                        return '';
+                    }
+
+                    return json.data;
+                }
+            },
+            'columns': [
+                { 'data': 'userName' },
+                { 'data': 'documentId' },
+                { 'data': 'email' },
+                { 'data': 'phoneNumber' }
+            ]
+        });
     }
 };

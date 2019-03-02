@@ -34,3 +34,4 @@ C:\Users\msilv\source\repos\WebSitesMVCTemplate\WebSitesMVCTemplate\obj\Debug\ne
 C:\Users\msilv\source\repos\WebSitesMVCTemplate\WebSitesMVCTemplate\obj\Debug\netcoreapp2.1\WebSitesMVCTemplate.csprojAssemblyReference.cache
 C:\Users\msilv\source\repos\WebSitesMVCTemplate\WebSitesMVCTemplate\obj\Debug\netcoreapp2.1\Razor\Views\Account\ChangePassword.g.cshtml.cs
 C:\Users\msilv\source\repos\WebSitesMVCTemplate\WebSitesMVCTemplate\obj\Debug\netcoreapp2.1\Razor\Views\User\Index.g.cshtml.cs
+C:\Users\msilv\source\repos\WebSitesMVCTemplate\WebSitesMVCTemplate\obj\Debug\netcoreapp2.1\Razor\Views\User\List.g.cshtml.cs

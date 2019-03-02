@@ -65,7 +65,7 @@ using WebSitesMVCTemplate.Models;
             WriteLiteral("\r\n<div class=\"row justify-content-around p-5\">\r\n    ");
             EndContext();
             BeginContext(105, 1853, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "79db3c407b1341018dbcc107ae44f709", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1c19fb5656384ba1a1ab83d547961856", async() => {
                 BeginContext(190, 95, true);
                 WriteLiteral("\r\n        <input type=\"hidden\" id=\"profileId\" name=\"profileId\" />\r\n        <input type=\"hidden\"");
                 EndContext();
