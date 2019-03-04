@@ -141,12 +141,17 @@
 
         var usersTable = $("#usersTable");
 
-        usersTable.DataTable({
+        usersTable.find('tfoot th').each(function () {
+            $(this).html('<input type="text" placeholder="" />');
+        });
+
+        var table = usersTable.DataTable({
             'processing': true,
             'serverSide': true,
             'ordering': true,
             'paging': true,
             'searching': true,
+            'dom': 'lrtip',
             'ajax': {
                 'url': 'https://localhost:44397/api/users/all',
                 'type': 'POST',
@@ -170,11 +175,21 @@
                 }
             },
             'columns': [
-                { 'data': 'userName' },
-                { 'data': 'documentId' },
-                { 'data': 'email' },
-                { 'data': 'phoneNumber' }
+                { 'data': 'userName', 'name': 'UserName' },
+                { 'data': 'documentId', 'name': 'DocumentId' },
+                { 'data': 'email', 'name': 'Email' },
+                { 'data': 'phoneNumber', 'name': 'PhoneNumber' }
             ]
+        });
+
+        table.columns().every(function () {
+            var currentColumn = this;
+
+            $('input', this.footer()).on('keyup change', function () {
+                if (currentColumn.search() !== this.value) {
+                    currentColumn.search(this.value).draw();
+                }
+            });
         });
     }
 };
