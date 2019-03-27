@@ -146,6 +146,7 @@ var Common = {
         Account.UserAccountOperations();
     },
     DocumentInitialization: function () {
+        $(".nav-admin").hide();
         Common.ModalsInitialization();
         Common.InitializeForms();
         Common.HideLoadingIndicator();

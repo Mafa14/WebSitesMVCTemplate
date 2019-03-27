@@ -1,5 +1,7 @@
 ﻿var TokenCookieName = 'Tauth';
 var LoggedUserDataCookieName = 'Luser';
+var ADMIN_ROLE_VALUE = 'Admin';
+var CLIENT_ROLE_VALUE = 'Client';
 
 var Account = {
     UserAccountOperations: function () {
@@ -8,6 +10,10 @@ var Account = {
             $("#loggedUser").text(userData.UserName + ' - ' + userData.DocumentId);
             $(".nav-logout").show();
             $(".nav-login").hide();
+
+            if (userData.Roles.includes(ADMIN_ROLE_VALUE)) {
+                $(".nav-admin").show();
+            }
         } else {
             $(".nav-logout").hide();
             $(".nav-login").show();
@@ -82,7 +88,8 @@ var Account = {
                     Id: data.id,
                     UserName: data.userName,
                     Email: data.email,
-                    DocumentId: data.documentId
+                    DocumentId: data.documentId,
+                    Roles: data.roles
                 }, { expires: 7 });
 
                 Account.UserAccountOperations();

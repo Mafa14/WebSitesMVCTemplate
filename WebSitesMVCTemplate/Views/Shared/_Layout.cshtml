@@ -30,6 +30,9 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link font-weight-bold white-text">Sobre nosotros</a>
                 </li>
+                <li class="nav-item nav-admin">
+                    <a href="@Url.Action("List", "User")" class="nav-link font-weight-bold white-text">Usuarios</a>
+                </li>
             </ul>
             <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post">
                 <ul class="navbar-nav ml-auto">

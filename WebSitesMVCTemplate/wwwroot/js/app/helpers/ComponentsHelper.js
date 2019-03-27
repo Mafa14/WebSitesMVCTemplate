@@ -1,4 +1,6 @@
-﻿var Component = {
+﻿var DATES_COMMON_SEPARATOR = '/';
+
+var Component = {
     InitToastr: function () {
         toastr.options = {
             "closeButton": false,
@@ -17,5 +19,9 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         };
+    },
+    ToDate: function (value) {
+        var from = value.split(DATES_COMMON_SEPARATOR)
+        return new Date(from[2], from[1] - 1, from[0])
     }
 }

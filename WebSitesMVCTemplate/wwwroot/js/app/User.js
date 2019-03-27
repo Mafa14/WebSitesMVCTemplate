@@ -86,8 +86,9 @@
                 $("#profilePhone").val(data.phoneNumber);
                 $("#profileAddress").val(data.address);
 
-                if (new Date(data.birthDate) > DATE_MIN_VALUE) {
-                    birthDatePicker.datepicker("setDate", new Date(data.birthDate));
+                var formattedDate = Component.ToDate(data.birthDate);
+                if (formattedDate > DATE_MIN_VALUE) {
+                    birthDatePicker.datepicker("setDate", formattedDate);
                 }
 
                 profileForm.submit(User.SaveProfile);
@@ -139,57 +140,73 @@
 
         Component.InitToastr();
 
-        var usersTable = $("#usersTable");
+        if (Cookies.get(TokenCookieName) !== undefined && Cookies.get(LoggedUserDataCookieName) !== undefined) {
+            var usersTable = $("#usersTable");
+            var userData = JSON.parse(Cookies.get(LoggedUserDataCookieName))
 
-        usersTable.find('tfoot th').each(function () {
-            $(this).html('<input type="text" placeholder="" />');
-        });
+            usersTable.find('tfoot th').each(function () {
+                $(this).html('<input type="text" placeholder="" />');
+            });
 
-        var table = usersTable.DataTable({
-            'processing': true,
-            'serverSide': true,
-            'ordering': true,
-            'paging': true,
-            'searching': true,
-            'dom': 'lrtip',
-            'ajax': {
-                'url': 'https://localhost:44397/api/users/all',
-                'type': 'POST',
-                'contentType': 'application/json',
-                'beforeSend': function (xhr) {
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get(TokenCookieName));
-                    Common.ShowLoadingIndicator();
-                },
-                'data': function (d) {
-                    return JSON.stringify(d);
-                },
-                'dataSrc': function (json) {
-                    Common.HideLoadingIndicator();
+            var table = usersTable.DataTable({
+                'processing': true,
+                'serverSide': true,
+                'ordering': true,
+                'paging': true,
+                'searching': true,
+                'dom': 'lrtip',
+                'ajax': {
+                    'url': 'https://localhost:44397/api/users/all/' + userData.Id,
+                    'type': 'POST',
+                    'contentType': 'application/json',
+                    'beforeSend': function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + Cookies.get(TokenCookieName));
+                        Common.ShowLoadingIndicator();
+                    },
+                    'data': function (d) {
+                        return JSON.stringify(d);
+                    },
+                    'dataSrc': function (json) {
+                        Common.HideLoadingIndicator();
 
-                    if (json.error != '') {
-                        toastr["error"](json.error);
+                        if (json.error != '') {
+                            toastr["error"](json.error);
+                            return '';
+                        }
+
+                        return json.data;
+                    },
+                    'error': function (jqXHR, textStatus, errorThrown) {
+                        Common.HideLoadingIndicator();
+
+                        if (jqXHR.responseText != '') {
+                            toastr["error"](jqXHR.responseText);
+                        }
+
+                        $('.dataTables_processing').hide()
+
                         return '';
                     }
-
-                    return json.data;
-                }
-            },
-            'columns': [
-                { 'data': 'userName', 'name': 'UserName' },
-                { 'data': 'documentId', 'name': 'DocumentId' },
-                { 'data': 'email', 'name': 'Email' },
-                { 'data': 'phoneNumber', 'name': 'PhoneNumber' }
-            ]
-        });
-
-        table.columns().every(function () {
-            var currentColumn = this;
-
-            $('input', this.footer()).on('keyup change', function () {
-                if (currentColumn.search() !== this.value) {
-                    currentColumn.search(this.value).draw();
-                }
+                },
+                'columns': [
+                    { 'data': 'userName', 'name': 'UserName' },
+                    { 'data': 'documentId', 'name': 'DocumentId' },
+                    { 'data': 'email', 'name': 'Email' },
+                    { 'data': 'phoneNumber', 'name': 'PhoneNumber' }
+                ]
             });
-        });
+
+            table.columns().every(function () {
+                var currentColumn = this;
+
+                $('input', this.footer()).on('keyup change', function () {
+                    if (currentColumn.search() !== this.value) {
+                        currentColumn.search(this.value).draw();
+                    }
+                });
+            });
+        } else {
+            toastr["error"]("Error, tienes que estar loggeado para poder acceder a esta pagina.");
+        }
     }
 };
