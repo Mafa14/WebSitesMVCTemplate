@@ -16,7 +16,7 @@
     <input type="hidden" value="@Url.Action("Index", "Home")" id="defaultRedirectionUrl" name="defaultRedirectionUrl" />
 
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top primary-color">
-        <a class="navbar-brand text-uppercase font-weight-bold white-text" href="#">Navbar</a>
+        <a class="navbar-brand text-uppercase font-weight-bold white-text" href="/Home">Navbar</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,14 +24,8 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a href="/Home" class="nav-link font-weight-bold white-text">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link font-weight-bold white-text">Sobre nosotros</a>
-                </li>
                 <li class="nav-item nav-admin">
-                    <a href="@Url.Action("List", "User")" class="nav-link font-weight-bold white-text">Usuarios</a>
+                    <a href="@Url.Action("List", "User")" class="nav-link text-uppercase font-weight-bold white-text">Usuarios</a>
                 </li>
             </ul>
             <form id="logoutForm" asp-controller="Account" asp-action="Logout" method="post">

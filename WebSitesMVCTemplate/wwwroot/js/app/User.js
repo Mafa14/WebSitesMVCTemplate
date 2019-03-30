@@ -145,8 +145,13 @@
             var userData = JSON.parse(Cookies.get(LoggedUserDataCookieName))
 
             usersTable.find('tfoot th').each(function () {
-                $(this).html('<input type="text" placeholder="" />');
+                if (!$(this).hasClass('no-search')) {
+                    $(this).html('<input type="text" placeholder="" />');
+                }
             });
+
+            var deleteButton = '<button class="btn btn-primary delete-btn" alt="Borrar"><i class="fa fa-trash"></i></button>';
+            var reservesButton = '<button class="btn btn-primary reserves-btn" alt="Reservas"><i class="fa fa-book"></i></button>';
 
             var table = usersTable.DataTable({
                 'processing': true,
@@ -189,11 +194,46 @@
                     }
                 },
                 'columns': [
+                    {
+                        'data': 'id',
+                        'name': 'Id',
+                        'visible': false,
+                        'searchable': false,
+                        'orderable': false
+                    },
                     { 'data': 'userName', 'name': 'UserName' },
                     { 'data': 'documentId', 'name': 'DocumentId' },
                     { 'data': 'email', 'name': 'Email' },
-                    { 'data': 'phoneNumber', 'name': 'PhoneNumber' }
-                ]
+                    { 'data': 'phoneNumber', 'name': 'PhoneNumber' },
+                    {
+                        'data': 'options',
+                        'name': 'Options',
+                        'searchable': false,
+                        'orderable': false
+                    }
+                ],
+                'columnDefs': [
+                    {
+                        'targets': -1,
+                        'data': null,
+                        'defaultContent': deleteButton + reservesButton
+                    }
+                ],
+                'language': {
+                    'lengthMenu': 'Mostrar _MENU_ registros por página',
+                    'zeroRecords': 'Ningún registro encontrado',
+                    'info': 'Viendo página _PAGE_ de _PAGES_',
+                    'infoEmpty': 'Ningún registro disponible',
+                    'infoFiltered': '(filtrando de un total _MAX_ de registros)',
+                    'loadingRecords': 'Cargando...',
+                    'processing': 'Procesando...',
+                    'paginate': {
+                        'first': 'Primero',
+                        'last': 'Último',
+                        'next': 'Siguiente',
+                        'previous': 'Anterior'
+                    }
+                }
             });
 
             table.columns().every(function () {
@@ -205,8 +245,47 @@
                     }
                 });
             });
+
+            usersTable.find('tbody').on('click', 'button', function () {
+                var options = this.className;
+                var data = table.row($(this).parents('tr')).data();
+
+                if (options.indexOf('delete-btn') >= 0) {
+                    User.DeleteUser(data['id']);
+                } else if (options.indexOf('reserves-btn') >= 0) {
+                    User.GetUserReserves(data['id']);
+                }
+            });
         } else {
             toastr["error"]("Error, tienes que estar loggeado para poder acceder a esta pagina.");
         }
+    },
+    DeleteUser: function (userId) {
+        event.preventDefault();
+
+        Component.InitToastr();
+
+        Common.ShowLoadingIndicator();
+
+        $.ajax({
+            url: "https://localhost:44397/api/users/delete/" + userId,
+            type: "DELETE",
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + Cookies.get(TokenCookieName));
+            }
+        }).done(function () {
+            Common.HideLoadingIndicator();
+            location.reload();
+        }).fail(function (jqXHR) {
+            Common.HideLoadingIndicator();
+            toastr["error"](jqXHR.responseText);
+        });
+    },
+    GetUserReserves: function (userId) {
+        event.preventDefault();
+
+        // TODO: We will implement after discussing with the client
+        alert(userId);
     }
 };
