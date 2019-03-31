@@ -43,3 +43,7 @@ label.error {
     text-align: center;
     padding-top: 25%;
 }
+
+.nav-admin {
+    display: none;
+}

@@ -68,7 +68,7 @@ using WebSitesMVCTemplate.Models;
             WriteLiteral("\r\n<div class=\"row justify-content-around p-5\">\r\n    ");
             EndContext();
             BeginContext(106, 1045, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9a2e29df719b46dcb0ebd7310f831f17", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0d8355d3f88848d487d7810af1811e70", async() => {
                 BeginContext(190, 954, true);
                 WriteLiteral(@"
         <input type=""hidden"" id=""changeId"" name=""changeId"" />
@@ -121,7 +121,7 @@ using WebSitesMVCTemplate.Models;
                 WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(1187, 87, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ba92b6ea5f9428daba25c0e16004759", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c67abdb9b8014208a2d547b3ab5d358f", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
